@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\InvestmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/investment/{id}', [InvestmentController::class, 'show']);
+Route::get('/investments/{user_id}', [InvestmentController::class, 'list']);
+Route::post('/investment/create', [InvestmentController::class, 'create']);
+Route::put('/investment/{id}/withdrawal', [InvestmentController::class, 'withdrawal']);

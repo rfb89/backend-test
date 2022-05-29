@@ -12,13 +12,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('investiments', function (Blueprint $table) {
+        Schema::create('investments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->date('date')->useCurrent();
             $table->double('amount', 10, 2);
-            $table->tinyInteger('withdrawal');
+            $table->date('withdrawal_date')->nullable(true)->default(null);
+            $table->double('withdrawal_gain', 10, 2)->nullable(true)->default(null);
+            $table->double('withdrawal_tax', 10, 2)->nullable(true)->default(null);
+            $table->double('withdrawal_balance', 10, 2)->nullable(true)->default(null);
             $table->timestamps();
-            $table->index(['withdrawal']);
         });
     }
 
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('investiments');
+        Schema::dropIfExists('investments');
     }
 };
