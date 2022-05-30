@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/investment/{id}', [InvestmentController::class, 'show']);
-Route::get('/investments/{user_id}', [InvestmentController::class, 'list']);
-Route::post('/investment/create', [InvestmentController::class, 'create']);
-Route::put('/investment/{id}/withdrawal', [InvestmentController::class, 'withdrawal']);
+Route::controller(InvestmentController::class)->group(function () {
+    Route::get('/investment/{id}', 'show');
+    Route::get('/investments/{user_id}', 'list');
+    Route::post('/investment/create', 'create');
+    Route::put('/investment/{id}/withdrawal', 'withdrawal');
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::delete('/user/{id}', 'destroy');
+    Route::get('/user/{id}', 'show');
+    Route::get('/users', 'index');
+    Route::post('/user', 'store');
+    Route::put('/user/{id}', 'update');
+});
